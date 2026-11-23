@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <title>Guerra Santa | Batalha Épica dos Séculos</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="css/bootstrap.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --gs-gold: #d4af37;
+      --gs-gold-light: #f3e5ab;
+      --gs-amber: #b86b11;
+      --gs-fire: #e25822;
+      --gs-dark-900: #0d0907;
+      --gs-dark-800: #18110d;
+      --gs-dark-700: #261b14;
+      --gs-dark-600: #38271d;
+      --gs-text: #f2e8dc;
+      --gs-text-soft: #bfa893;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      padding-top: 80px;
+      max-width: 100%;
+      overflow-x: hidden;
+      color: var(--gs-text);
+      background-color: var(--gs-dark-900);
+      background-image:
+        radial-gradient(ellipse at 15% 0%, rgba(226, 88, 34, .22) 0%, transparent 55%),
+        radial-gradient(ellipse at 90% 45%, rgba(212, 175, 55, .14) 0%, transparent 50%),
+        linear-gradient(180deg, var(--gs-dark-800) 0%, var(--gs-dark-900) 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--gs-gold-light);
+      outline-offset: 2px;
+    }
+
+    .navbar-gs {
+      min-height: 80px;
+      background: linear-gradient(90deg, var(--gs-dark-900) 0%, var(--gs-dark-700) 55%, var(--gs-dark-600) 100%);
+      border-bottom: 2px solid var(--gs-gold);
+      box-shadow: 0 4px 24px rgba(212, 175, 55, .18);
+    }
+
+    .navbar-brand { display: flex; align-items: center; padding: 0; }
+
+    .logo-navbar, .navbar-brand img {
+      display: block;
+      width: 62px;
+      height: 62px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid var(--gs-gold);
+      box-shadow: 0 0 14px rgba(212, 175, 55, .45);
+    }
+
+    .navbar .nav-link {
+      color: var(--gs-gold);
+      font-weight: 600;
+      letter-spacing: .05em;
+      padding: .5rem .9rem;
+      border-radius: 6px;
+      transition: color .2s, background-color .2s;
+    }
+
+    .navbar .nav-link:hover, .navbar .nav-link:focus {
+      color: var(--gs-gold-light);
+      background-color: rgba(212, 175, 55, .18);
+    }
+
+    .navbar-toggler { border-color: var(--gs-gold); }
+
+    .btn-topo-alistamento {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: .65rem 1.4rem;
+      font-size: .85rem;
+      font-weight: 700;
+      line-height: 1.2;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .75);
+      color: #fff;
+      background: linear-gradient(180deg, var(--gs-fire) 0%, #8b2500 100%);
+      border: 1px solid var(--gs-gold);
+      border-radius: 8px;
+      transition: transform .15s, box-shadow .15s, background .15s;
+      text-decoration: none;
+    }
+
+    .btn-topo-alistamento:hover, .btn-topo-alistamento:focus {
+      color: var(--gs-gold-light);
+      background: linear-gradient(180deg, #ff6b35 0%, var(--gs-amber) 100%);
+      box-shadow: 0 4px 16px rgba(212, 175, 55, .45);
+      transform: translateY(-1px);
+    }
+
+    .header-foto {
+      background-image: url('images/banner\ guerra\ santa.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      aspect-ratio: 21 / 9;
+      min-height: 200px;
+      border-bottom: 2px solid var(--gs-gold);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, .7);
+    }
+
+    .banner { padding: 70px 0; overflow: hidden; }
+
+    .banner h1 {
+      color: #fff;
+      line-height: 1.15;
+      text-shadow: 0 0 24px rgba(212, 175, 55, .45);
+    }
+
+    .banner .text-uppercase { color: var(--gs-gold); letter-spacing: .08em; }
+    .banner .lead { max-width: 650px; color: var(--gs-text); }
+
+    .gs-logo {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      height: 300px;
+      margin: 0 auto;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid var(--gs-gold);
+      filter: drop-shadow(0 8px 25px rgba(212, 175, 55, .4));
+      animation: flutuar 3.5s ease-in-out infinite;
+    }
+
+    @keyframes flutuar {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .titulo-dourado {
+      color: var(--gs-gold);
+      font-weight: 700;
+      text-shadow: 0 0 18px rgba(212, 175, 55, .35);
+    }
+
+    .texto-suave { color: var(--gs-text-soft); }
+
+    #carouselGuerraSanta {
+      overflow: hidden;
+      border-radius: 12px;
+      border: 2px solid var(--gs-gold);
+      box-shadow: 0 0 30px rgba(212, 175, 55, .18);
+    }
+
+    #carouselGuerraSanta .carousel-item img {
+      display: block;
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+      background-color: var(--gs-dark-800);
+    }
+
+    #carouselGuerraSanta .carousel-indicators [data-bs-target] {
+      background-color: var(--gs-gold);
+    }
+
+    .card-group {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+      padding: 0 1rem;
+      gap: 1.5rem;
+    }
+
+    .card-gs {
+      background-color: var(--gs-dark-800);
+      border: 1px solid var(--gs-gold);
+      border-radius: 12px !important;
+      overflow: hidden;
+      box-shadow: 0 0 22px rgba(0, 0, 0, .5);
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .card-gs:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(212, 175, 55, .28);
+    }
+
+    .card-gs .card-header {
+      color: var(--gs-gold-light);
+      font-weight: 600;
+      border-bottom: 1px solid rgba(212, 175, 55, .45);
+      background-color: rgba(212, 175, 55, .12);
+    }
+
+    .card-gs .card-title { color: var(--gs-gold); font-weight: 700; }
+    .card-gs .card-text { color: var(--gs-text); }
+    .card-gs .card-footer { background: transparent; border-top: 1px solid rgba(212, 175, 55, .25); }
+
+    .btn-card-gs {
+      color: var(--gs-gold);
+      font-weight: 600;
+      background: transparent;
+      border: 1px solid var(--gs-gold);
+      border-radius: 8px;
+      padding: .45rem 1rem;
+      transition: background .15s, color .15s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-card-gs:hover, .btn-card-gs:focus {
+      color: var(--gs-dark-900);
+      background: var(--gs-gold);
+    }
+
+    /* Estilos do Formulário de Alistamento (Pergaminho) */
+    .pergaminho-alistamento {
+      max-width: 920px;
+      padding: 2.8rem 2.2rem;
+      background: radial-gradient(circle at center, #261b12 0%, #160f0a 100%);
+      border: 2px solid #8c6d3f;
+      border-radius: 6px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85), inset 0 0 50px rgba(0, 0, 0, 0.8);
+      position: relative;
+    }
+
+    .titulo-pergaminho {
+      color: #e6d5b8;
+      font-family: 'Cinzel', 'Georgia', serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+    }
+
+    .label-pergaminho {
+      display: block;
+      color: #d9c7a8;
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.03em;
+    }
+
+    .input-pergaminho,
+    .select-pergaminho {
+      width: 100%;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.95rem;
+      color: #fff6e5;
+      background: linear-gradient(180deg, #755b2b 0%, #59431d 100%);
+      border: 1.5px solid #d4af37;
+      border-radius: 5px;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .input-pergaminho::placeholder { color: rgba(255, 246, 229, 0.55); }
+
+    .input-pergaminho:focus,
+    .select-pergaminho:focus {
+      outline: none;
+      border-color: #ffe27a;
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.5), inset 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .select-pergaminho option {
+      background-color: #3d2d14;
+      color: #f3e5ab;
+      padding: 8px;
+    }
+
+    .btn-alistar-fogo {
+      padding: 0.75rem 2rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #fff8e7;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, var(--gs-fire) 0%, #7d2506 50%, #c95b18 100%);
+      border: 2px solid #f0a830;
+      border-radius: 6px;
+      box-shadow: 0 0 18px rgba(226, 88, 34, 0.65), inset 0 0 10px rgba(255, 200, 80, 0.4);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.15s, box-shadow 0.2s, filter 0.2s;
+    }
+
+    .btn-alistar-fogo:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.12);
+      box-shadow: 0 0 26px rgba(255, 136, 0, 0.9), inset 0 0 14px rgba(255, 220, 110, 0.6);
+    }
+
+    .texto-juramento { color: #cbb89d; font-size: 0.85rem; line-height: 1.35; }
+    .fenix-glow svg { filter: drop-shadow(0 0 14px rgba(255, 140, 0, 0.65)); }
+    .emblema-box svg { transition: transform 0.3s ease; }
+    .emblema-box:hover svg { transform: scale(1.06); }
+
+    .alerta-juramento {
+      padding: 1rem 1.2rem;
+      background: rgba(212, 175, 55, 0.14);
+      border: 1px solid #d4af37;
+      border-radius: 6px;
+      color: #f3e5ab;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    /* Offcanvas */
+    .offcanvas-gs {
+      background: linear-gradient(180deg, var(--gs-dark-800) 0%, var(--gs-dark-900) 100%);
+      border-right: 2px solid var(--gs-gold);
+      box-shadow: 4px 0 30px rgba(212, 175, 55, 0.25);
+      color: var(--gs-text);
+    }
+
+    .offcanvas-gs .offcanvas-header {
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+      background-color: rgba(212, 175, 55, 0.08);
+    }
+
+    .offcanvas-gs .offcanvas-title {
+      color: var(--gs-gold);
+      font-weight: 700;
+      text-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+    }
+
+    .offcanvas-gs .btn-close { filter: invert(1) drop-shadow(0 0 4px var(--gs-gold)); }
+
+    .offcanvas-gs .list-group-item {
+      background-color: rgba(38, 27, 20, 0.7);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      color: var(--gs-text);
+      font-weight: 500;
+      border-radius: 8px !important;
+      margin-bottom: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .offcanvas-gs .list-group-item:hover {
+      background-color: rgba(212, 175, 55, 0.18);
+      color: var(--gs-gold-light);
+      border-color: var(--gs-gold);
+      transform: translateX(4px);
+    }
+
+    @media (max-width: 991.98px) {
+      body { padding-top: 75px; }
+      .navbar-gs { min-height: 75px; }
+      .logo-navbar, .navbar-brand img { width: 56px; height: 56px; }
+      .banner { padding: 50px 0; text-align: center; }
+      .banner h1 { font-size: 2.2rem; }
+      #carouselGuerraSanta .carousel-item img { height: 350px; }
+    }
+  </style>
+</head>
+
+<body data-bs-theme="dark">
+  <nav class="navbar navbar-expand-lg navbar-gs fixed-top text-uppercase">
+    <div class="container">
+      <button class="btn btn-card-gs me-3 py-1 px-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvasMenu" aria-controls="offCanvasMenu" title="Abrir Crônicas">
+        ☰
+      </button>
+
+      <a class="navbar-brand active" href="Guerra-santa.html">
+        <img src="images/logo guerra santa.jpg" alt="Brasão Guerra Santa" class="logo-navbar">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir Menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="Capitulo1.html">A Convocação</a></li>
+          <li class="nav-item"><a class="nav-link" href="Capitulo2.html">As Cruzadas</a></li>
+          <li class="nav-item"><a class="nav-link" href="Capitulo3.html">O Cerco Final</a></li>
+        </ul>
+        <a href="#secao-alistamento" class="btn btn-topo-alistamento">Junte-se à Ordem</a>
+      </div>
+    </div>
+  </nav>
+  
+  <header class="header-foto" role="img" aria-label="Banner Guerra Santa"></header>
+
+  <section class="banner">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <p class="text-uppercase small fw-semibold mb-2">Batalha Épica dos Séculos • Lutem Pela Fé e Honra</p>
+          <h1 class="display-4 fw-bold">GUERRA SANTA</h1>
+          <p class="lead mb-0">
+            Dois impérios, duas bandeiras e um destino forjado a ferro e fogo. Descubra a história, as ordens de cavalaria e as grandes batalhas que moldaram os reinos antigos.
+          </p>
+        </div>
+        <div class="col-lg-5 text-center d-none d-lg-block">
+          <img src="images/logo guerra santa.jpg" alt="Brasão Guerra Santa" class="gs-logo">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container pb-5">
+    <div id="carouselGuerraSanta" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselGuerraSanta" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Cena 1"></button>
+        <button type="button" data-bs-target="#carouselGuerraSanta" data-bs-slide-to="1" aria-label="Cena 2"></button>
+        <button type="button" data-bs-target="#carouselGuerraSanta" data-bs-slide-to="2" aria-label="Cena 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="images/banner guerra santa.jpg" alt="O choque dos exércitos no vale">
+        </div>
+        <div class="carousel-item">
+          <img src="images/cavalaria.jpg" alt="A carga da cavalaria blindada">
+        </div>
+        <div class="carousel-item">
+          <img src="images/fortaleza.jpg" alt="As muralhas em chamas da cidadela">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselGuerraSanta" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselGuerraSanta" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Próximo</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="container pb-4" id="cronicas">
+    <h2 class="titulo-dourado mb-4">Crônicas da Guerra</h2>
+    <div class="card-group">
+      <div class="card card-gs">
+        <div class="card-header">Capítulo I</div>
+        <div class="card-body">
+          <h3 class="card-title h5">A Convocação</h3>
+          <p class="card-text">O chamado ecoa pelas cidadelas. Cavaleiros, arqueiros e escudeiros erguem seus estandartes rumo ao campo de batalha.</p>
+        </div>
+        <div class="card-footer">
+          <a href="Capitulo1.html" class="btn btn-card-gs">Ler crônica</a>
+        </div>
+      </div>
+
+      <div class="card card-gs">
+        <div class="card-header">Capítulo II</div>
+        <div class="card-body">
+          <h3 class="card-title h5">A Cavalaria Sacra</h3>
+          <p class="card-text">No vale entre as fortalezas, aço contra aço decide o destino das rotas sagradas sob céus cobertos de fumaça.</p>
+        </div>
+        <div class="card-footer">
+          <a href="Capitulo2.html" class="btn btn-card-gs">Ler crônica</a>
+        </div>
+      </div>
+
+      <div class="card card-gs">
+        <div class="card-header">Capítulo III</div>
+        <div class="card-body">
+          <h3 class="card-title h5">A Fortaleza</h3>
+          <p class="card-text">O cerco final às muralhas antigas: estratégias de guerra, honra inabalável e a luta pela glória eterna.</p>
+        </div>
+        <div class="card-footer">
+          <a href="Capitulo3.html" class="btn btn-card-gs">Ler crônica</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO DE ALISTAMENTO FUNCIONAL -->
+  <section id="secao-alistamento" class="container py-5">
+    <div class="pergaminho-alistamento mx-auto">
+      <h2 class="titulo-pergaminho text-center mb-4">FORMULÁRIO DE ALISTAMENTO</h2>
+
+      <div class="row align-items-center justify-content-center g-4">
+        <!-- Emblema Esquerdo: Leão Dourado -->
+        <div class="col-md-3 text-center d-none d-md-block">
+          <div class="emblema-box">
+            <svg viewBox="0 0 120 140" width="115" height="135" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bordaOuro" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#f3e5ab"/>
+                  <stop offset="50%" stop-color="#d4af37"/>
+                  <stop offset="100%" stop-color="#8a6212"/>
+                </linearGradient>
+                <linearGradient id="fundoEscudo" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#1b2b44"/>
+                  <stop offset="100%" stop-color="#0d1522"/>
+                </linearGradient>
+              </defs>
+              <path d="M15,10 L105,10 L105,70 C105,105 60,130 60,130 C60,130 15,105 15,70 Z" 
+                    fill="url(#fundoEscudo)" stroke="url(#bordaOuro)" stroke-width="5"/>
+              <path d="M60,30 C70,30 76,38 74,47 C80,50 82,58 76,65 L82,82 L72,85 L68,72 L58,74 L55,95 L45,95 L48,70 L38,75 L35,66 L47,58 C43,50 48,30 60,30 Z" 
+                    fill="url(#bordaOuro)"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Centro: Campos do Formulário -->
+        <div class="col-md-6">
+          <form id="formAlistamento">
+            <div class="mb-3">
+              <label for="nomeRecruta" class="label-pergaminho">Nome do Recruta</label>
+              <input type="text" id="nomeRecruta" class="input-pergaminho" placeholder="Digite seu nome de guerra..." required>
+            </div>
+
+            <div class="mb-4">
+              <label for="ordemDesejada" class="label-pergaminho">Ordem Desejada</label>
+              <select id="ordemDesejada" class="select-pergaminho" required>
+                <option value="Ordem do Leão Dourado">Ordem do Leão Dourado</option>
+                <option value="Ordem da Fênix de Fogo">Ordem da Fênix de Fogo</option>
+                <option value="Ordem dos Cavaleiros da Cruz">Ordem dos Cavaleiros da Cruz</option>
+              </select>
+            </div>
+
+            <div class="d-flex flex-column flex-sm-row align-items-center gap-3">
+              <button type="submit" class="btn-alistar-fogo">
+                ALISTAR-SE
+              </button>
+              <span class="texto-juramento">
+                Complete seu juramento<br>e junte-se à cruzada.
+              </span>
+            </div>
+          </form>
+
+          <div id="mensagemJuramento" class="alerta-juramento mt-4 d-none"></div>
+        </div>
+
+        <!-- Emblema Direito: Fênix de Fogo -->
+        <div class="col-md-3 text-center d-none d-md-block">
+          <div class="emblema-box fenix-glow">
+            <svg viewBox="0 0 120 120" width="125" height="125" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="fogoFenix" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#fff099"/>
+                  <stop offset="45%" stop-color="#ff9900"/>
+                  <stop offset="100%" stop-color="#cc3300"/>
+                </linearGradient>
+              </defs>
+              <path d="M60,18 C64,26 62,34 60,38 C76,26 98,28 106,44 C94,46 84,52 78,60 C92,60 100,68 98,78 C86,74 74,74 66,80 C72,92 66,104 60,110 C54,104 48,92 54,80 C46,74 34,74 22,78 C20,68 28,60 42,60 C36,52 26,46 14,44 C22,28 44,26 60,38 C58,34 56,26 60,18 Z" 
+                    fill="url(#fogoFenix)"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="offcanvas offcanvas-start offcanvas-gs" tabindex="-1" id="offCanvasMenu" aria-labelledby="offcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasLabel">Arquivos da Ordem</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column justify-content-between">
+      <div>
+        <div class="mt-4">
+            <h6 class="titulo-dourado mb-2 text-uppercase small fw-bold">Crônicas da Guerra</h6>
+        <p class="texto-suave mb-3">
+          Explore os registros históricos, mapas estratégicos e as facções envolvidas na <strong>Guerra Santa</strong>.
+        </p>
+
+        <hr style="border-color: rgba(212, 175, 55, 0.25);">
+
+        <h6 class="titulo-dourado mb-3 text-uppercase small fw-bold">Navegação Rápida</h6>
+        
+        <div class="list-group list-group-flush">
+          <a href="Capitulo1.html" class="list-group-item list-group-item-action">⚔️ Capítulo I: A Convocação</a>
+          <a href="Capitulo2.html" class="list-group-item list-group-item-action">🐎 Capítulo II: A Cavalaria</a>
+          <a href="Capitulo3.html" class="list-group-item list-group-item-action">🏰 Capítulo III: A Fortaleza</a>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <div class="p-3 rounded mb-3" style="background-color: rgba(212, 175, 55, 0.08); border: 1px dashed var(--gs-gold);">
+          <small class="texto-suave d-block text-center">Pela Fé e Honra<br>Batalha Épica dos Séculos</small>
+        </div>
+        <a href="#secao-alistamento" class="btn btn-topo-alistamento w-100" data-bs-dismiss="offcanvas">Prestar Juramento</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="container pb-5 text-center">
+    <hr style="border-color: rgba(212, 175, 55, 0.25);" class="mb-4">
+    <h2 class="titulo-dourado h4">GUERRA SANTA</h2>
+    <p class="texto-suave mb-0">Lutem pela Fé e Honra • Todos os direitos reservados</p>
+  </footer>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Script funcional para processar o alistamento
+    document.getElementById('formAlistamento').addEventListener('submit', function(evento) {
+      evento.preventDefault();
+
+      const nome = document.getElementById('nomeRecruta').value.trim();
+      const ordem = document.getElementById('ordemDesejada').value;
+      const caixaMensagem = document.getElementById('mensagemJuramento');
+
+      if (nome !== "") {
+        localStorage.setItem('recrutaNome', nome);
+        localStorage.setItem('recrutaOrdem', ordem);
+
+        caixaMensagem.innerHTML = `
+          ⚔️ <strong>Juramento Aceito!</strong><br>
+          Saudações, <strong>${nome}</strong>. Você agora faz parte da <strong>${ordem}</strong>. Prepare sua espada!
+        `;
+        caixaMensagem.classList.remove('d-none');
+        document.getElementById('nomeRecruta').value = '';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <title>Capítulo II: A Cavalaria | Guerra Santa</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="css/bootstrap.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --gs-gold: #d4af37;
+      --gs-gold-light: #f3e5ab;
+      --gs-amber: #b86b11;
+      --gs-fire: #e25822;
+      --gs-dark-900: #0d0907;
+      --gs-dark-800: #18110d;
+      --gs-dark-700: #261b14;
+      --gs-dark-600: #38271d;
+      --gs-text: #f2e8dc;
+      --gs-text-soft: #bfa893;
+    }
+
+    * {
+         box-sizing: border-box; 
+        }
+    html {
+         scroll-behavior: smooth;
+         scroll-padding-top: 90px; 
+         max-width: 100%; overflow-x: hidden;
+         }
+
+    body {
+
+      padding-top: 80px; 
+      max-width: 100%; overflow-x: hidden;
+      color: var(--gs-text); 
+      background-color: var(--gs-dark-900);
+      background-image: radial-gradient(ellipse at 15% 0%, rgba(226, 88, 34, .22) 0%, transparent 55%), radial-gradient(ellipse at 90% 45%, rgba(212, 175, 55, .14) 0%, transparent 50%), linear-gradient(180deg, var(--gs-dark-800) 0%, var(--gs-dark-900) 100%);
+      background-attachment: fixed; min-height: 100vh;
+    }
+
+    .navbar-gs {
+      min-height: 80px;
+      background: linear-gradient(90deg, var(--gs-dark-900) 0%, var(--gs-dark-700) 55%, var(--gs-dark-600) 100%);
+      border-bottom: 2px solid var(--gs-gold); box-shadow: 0 4px 24px rgba(212, 175, 55, .18);
+    }
+
+    .navbar-brand {
+        display: flex;
+        align-items: center; 
+        padding: 0; 
+    }
+    .logo-navbar { 
+        display: block; 
+        width: 62px;
+         height: 62px; 
+         object-fit: cover;
+         border-radius: 50%;
+          border: 2px solid var(--gs-gold); box-shadow: 0 0 14px rgba(212, 175, 55, .45);
+         }
+    .navbar .nav-link { 
+        color: var(--gs-gold); 
+        font-weight: 600; 
+        padding: .5rem .9rem; 
+        border-radius: 6px; 
+    }
+    .navbar .nav-link:hover, .navbar .nav-link.active {
+         color: var(--gs-gold-light); 
+         background-color: rgba(212, 175, 55, .18); 
+        }
+    .navbar-toggler {
+         border-color: var(--gs-gold); 
+    }
+
+    .btn-alistamento {
+      display: inline-flex; 
+      align-items: center; 
+      justify-content: center; 
+      padding: .65rem 1.4rem; 
+      font-size: .85rem;
+       font-weight: 700;
+      text-transform: uppercase; 
+      color: #fff; 
+      background: linear-gradient(180deg, var(--gs-fire) 0%, #8b2500 100%);
+      border: 1px solid var(--gs-gold); border-radius: 8px; text-decoration: none;
+    }
+
+    .header-foto {
+      background-image: url('images/cruzadas.jpg');
+      background-size: cover;
+       background-position: center; 
+       aspect-ratio: 21 / 9; min-height: 200px; 
+       border-bottom: 2px solid var(--gs-gold);
+    }
+
+    .titulo-dourado {
+         color: var(--gs-gold); 
+         font-weight: 700;
+          text-shadow: 0 0 18px rgba(212, 175, 55, .35); 
+        }
+    .texto-suave { 
+        color: var(--gs-text-soft); 
+    }
+    .card-gs {
+        background-color: var(--gs-dark-800);
+        border: 1px solid var(--gs-gold); 
+        border-radius: 12px; 
+        box-shadow: 0 0 22px rgba(0, 0, 0, .5); 
+    }
+  </style>
+</head>
+
+<body data-bs-theme="dark">
+  <nav class="navbar navbar-expand-lg navbar-gs fixed-top text-uppercase">
+    <div class="container">
+      <a class="navbar-brand" href="Guerra-santa.html">
+        <img src="images/logo guerra santa.jpg" alt="Brasão" class="logo-navbar">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="Capitulo1.html">A Convocação</a></li>
+          <li class="nav-item"><a class="nav-link active" href="Capitulo2.html">As Cruzadas</a></li>
+          <li class="nav-item"><a class="nav-link" href="Capitulo3.html">O Cerco Final</a></li>
+        </ul>
+        <a href="Guerra-santa.html" class="btn btn-alistamento">Voltar ao Início</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="header-foto" role="img" aria-label="Banner Capítulo II"></header>
+
+  <main class="container py-5">
+    <p class="text-uppercase small fw-semibold titulo-dourado mb-2">Capítulo II • O Avanço da Cavalaria</p>
+    <h1 class="display-5 fw-bold mb-3">A CARGA DOS EXÉRCITOS SAGRADOS</h1>
+    <p class="texto-suave lead mb-5">
+      O campo de batalha treme com o galope da cavalaria sacra. É o momento de velocidade, manobras dinâmicas, confrontos intensos e táticas sob o estandarte.
+    </p>
+
+    <div class="row g-4">
+      <div class="col-lg-7">
+        <div class="card card-gs p-4 h-100">
+          <h3 class="titulo-dourado h4 mb-3">🐎 MANOBRAS DO CAPÍTULO II</h3>
+          <ul class="texto-suave mb-0 lh-lg">
+            <li><strong>Carga Blindada:</strong> Estratégias de avanço rápido e rompimento das linhas adversárias.</li>
+            <li><strong>Sincronia de Tropas:</strong> Coordenação avançada entre arqueiros, lanceiros e cavalaria pesada.</li>
+            <li><strong>Armas e Forjas:</strong> Manutenção e aprimoramento de espadas e couraças de combate.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="card card-gs p-4 h-100">
+          <h3 class="titulo-dourado h4 mb-3">⚡ VELOCIDADE E HONRA</h3>
+          <p class="texto-suave">
+            Os cavaleiros provam seu valor no calor do combate. A disciplina e a precisão definem quem sobrevive ao choque dos impérios.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
