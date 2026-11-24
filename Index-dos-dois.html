@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <title>Portal Unificado | Fé, Tecnologia & Batalhas</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="css/bootstrap.css" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Paleta Santos Católicos */
+      --tech-cyan: #00e5ff;
+      --tech-cyan-light: #7df3ff;
+      --tech-gold: #ffd700;
+      --tech-gold-soft: #f3c64f;
+      --tech-blue-900: #020a1f;
+      --tech-blue-800: #04122e;
+      --tech-blue-700: #081c47;
+      --tech-blue-600: #0d2a6b;
+      --tech-blue-500: #1e6bff;
+      --tech-text: #e6eefc;
+      --tech-text-soft: #9fb4d3;
+
+      /* Paleta Guerra Santa */
+      --gs-gold: #d4af37;
+      --gs-gold-light: #f3e5ab;
+      --gs-amber: #b86b11;
+      --gs-fire: #e25822;
+      --gs-dark-900: #0d0907;
+      --gs-dark-800: #18110d;
+      --gs-dark-700: #261b14;
+      --gs-dark-600: #38271d;
+      --gs-text: #f2e8dc;
+      --gs-text-soft: #bfa893;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    /* TEMAS DINÂMICOS DO BODY */
+    body.tema-santos {
+      padding-top: 70px;
+      color: var(--tech-text);
+      background-color: var(--tech-blue-900);
+      background-image:
+        radial-gradient(ellipse at 15% 0%, rgba(30, 107, 255, .28) 0%, transparent 55%),
+        radial-gradient(ellipse at 90% 45%, rgba(255, 215, 0, .10) 0%, transparent 50%),
+        linear-gradient(180deg, var(--tech-blue-800) 0%, var(--tech-blue-900) 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      transition: background 0.4s ease;
+    }
+
+    body.tema-guerra {
+      padding-top: 80px;
+      color: var(--gs-text);
+      background-color: var(--gs-dark-900);
+      background-image:
+        radial-gradient(ellipse at 15% 0%, rgba(226, 88, 34, .22) 0%, transparent 55%),
+        radial-gradient(ellipse at 90% 45%, rgba(212, 175, 55, .14) 0%, transparent 50%),
+        linear-gradient(180deg, var(--gs-dark-800) 0%, var(--gs-dark-900) 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      transition: background 0.4s ease;
+    }
+
+    /* ESTILOS COMUNS E COMPONENTES */
+    .view-secao { display: none; }
+    .view-secao.ativo { display: block; }
+
+    .navbar-santos {
+      min-height: 70px;
+      background: linear-gradient(90deg, var(--tech-blue-800) 0%, var(--tech-blue-700) 55%, var(--tech-blue-600) 100%);
+      border-bottom: 2px solid var(--tech-gold-soft);
+      box-shadow: 0 4px 24px rgba(0, 229, 255, .15);
+    }
+
+    .navbar-gs {
+      min-height: 80px;
+      background: linear-gradient(90deg, var(--gs-dark-900) 0%, var(--gs-dark-700) 55%, var(--gs-dark-600) 100%);
+      border-bottom: 2px solid var(--gs-gold);
+      box-shadow: 0 4px 24px rgba(212, 175, 55, .18);
+    }
+
+    .logo-navbar {
+      display: block;
+      width: 52px;
+      height: 52px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid var(--tech-gold);
+      box-shadow: 0 0 14px rgba(255, 215, 0, .45);
+    }
+
+    .logo-navbar-gs {
+      width: 62px;
+      height: 62px;
+      border-color: var(--gs-gold);
+    }
+
+    .navbar-santos .nav-link { color: var(--tech-cyan); font-weight: 600; cursor: pointer; }
+    .navbar-santos .nav-link:hover { color: var(--tech-gold); }
+    .navbar-gs .nav-link { color: var(--gs-gold); font-weight: 600; cursor: pointer; }
+    .navbar-gs .nav-link:hover { color: var(--gs-gold-light); }
+
+    .header-foto-santos {
+      background-image: url('images/Banner.santos.jpg');
+      background-size: cover;
+      background-position: center;
+      aspect-ratio: 21 / 5;
+      min-height: 150px;
+      border-bottom: 2px solid var(--tech-gold);
+    }
+
+    .header-foto-gs {
+      background-image: url('images/banner guerra santa.jpg');
+      background-size: cover;
+      background-position: center;
+      aspect-ratio: 21 / 9;
+      min-height: 200px;
+      border-bottom: 2px solid var(--gs-gold);
+    }
+
+    .santos-logo, .gs-logo {
+      display: block;
+      width: 100%;
+      max-width: 280px;
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid var(--tech-gold);
+    }
+
+    .img-biografia-santo {
+      width: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 2px solid var(--tech-gold);
+      box-shadow: 0 0 28px rgba(0, 229, 255, 0.25);
+    }
+
+    .titulo-destaque { color: var(--tech-cyan); font-weight: 700; }
+    .titulo-dourado { color: var(--gs-gold); font-weight: 700; }
+    .texto-suave { color: var(--tech-text-soft); }
+
+    .card-santo {
+      background-color: var(--tech-blue-800);
+      border: 1px solid var(--tech-cyan);
+      border-radius: 12px !important;
+      overflow: hidden;
+    }
+
+    .card-santo .card-img-top {
+      height: 190px;
+      object-fit: cover;
+      border-bottom: 1px solid rgba(0, 229, 255, 0.35);
+    }
+
+    .card-gs {
+      background-color: var(--gs-dark-800);
+      border: 1px solid var(--gs-gold);
+      border-radius: 12px !important;
+      overflow: hidden;
+    }
+
+    .offcanvas-santos {
+      background: linear-gradient(180deg, var(--tech-blue-800) 0%, var(--tech-blue-900) 100%);
+      border-right: 2px solid var(--tech-gold);
+      color: var(--tech-text);
+    }
+
+    .offcanvas-gs {
+      background: linear-gradient(180deg, var(--gs-dark-800) 0%, var(--gs-dark-900) 100%);
+      border-right: 2px solid var(--gs-gold);
+      color: var(--gs-text);
+    }
+
+    .pergaminho-alistamento {
+      max-width: 920px;
+      padding: 2.8rem 2.2rem;
+      background: radial-gradient(circle at center, #261b12 0%, #160f0a 100%);
+      border: 2px solid #8c6d3f;
+      border-radius: 6px;
+    }
+
+    .input-pergaminho, .select-pergaminho {
+      width: 100%;
+      padding: 0.65rem 0.9rem;
+      color: #fff6e5;
+      background: linear-gradient(180deg, #755b2b 0%, #59431d 100%);
+      border: 1.5px solid #d4af37;
+      border-radius: 5px;
+    }
+
+    .btn-alistar-fogo {
+      padding: 0.75rem 2rem;
+      font-weight: 700;
+      color: #fff8e7;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, var(--gs-fire) 0%, #7d2506 50%, #c95b18 100%);
+      border: 2px solid #f0a830;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body data-bs-theme="dark" class="tema-santos">
+
+  <!-- =================================================================
+       ESTRUTURA: SANTOS CATÓLICOS (HOME)
+       ================================================================= -->
+  <div id="secao-home-santos" class="view-secao ativo">
+    <nav class="navbar navbar-expand-lg navbar-santos fixed-top text-uppercase">
+      <div class="container">
+        <button class="btn btn-outline-info me-3 py-1 px-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvasSantos">☰</button>
+        <a class="navbar-brand" onclick="mudarSecao('home-santos')" style="cursor:pointer;">
+          <img src="images/logo.santos.jpg" alt="Logo" class="logo-navbar">
+        </a>
+        <div class="collapse navbar-collapse" id="menuSantos">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link" onclick="mudarSecao('carlo-acutis')">Carlo Acutis</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="mudarSecao('isidoro')">Isidoro</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="mudarSecao('sao-gabriel')">Gabriel</a></li>
+          </ul>
+          <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-warning btn-sm fw-bold text-dark" onclick="mudarSecao('guerra-santa')">⚔️ Ir para Guerra Santa</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+    <header class="header-foto-santos"></header>
+
+    <section class="banner py-5">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-7">
+            <p class="text-uppercase small fw-semibold mb-2 text-warning">Intercessores da Fé no Mundo Digital</p>
+            <h1 class="display-4 fw-bold">SANTOS CATÓLICOS & TECNOLOGIA</h1>
+            <p class="lead mb-0 texto-suave">Inovação, fé, conexão e evangelização através dos meios digitais.</p>
+          </div>
+          <div class="col-lg-5 text-center d-none d-lg-block">
+            <img src="images/logo.santos.jpg" alt="Logo" class="santos-logo">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container pb-5" id="patronos">
+      <h2 class="titulo-destaque mb-4">Patronos da Era Digital</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card card-santo h-100">
+            <img src="images/canonização.avif" class="card-img-top" alt="São Carlo Acutis">
+            <div class="card-header text-warning fw-bold">• Padroeiro da Internet</div>
+            <div class="card-body">
+              <h3 class="card-title h5 text-info">São Carlo Acutis</h3>
+              <p class="card-text">Jovem italiano apaixonado por computação e pela Eucaristia.</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+              <button class="btn btn-outline-info btn-sm" onclick="mudarSecao('carlo-acutis')">Ver biografia</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-santo h-100">
+            <img src="images/isidoro.jpg" class="card-img-top" alt="Santo Isidoro de Sevilha">
+            <div class="card-header text-warning fw-bold">• Padroeiro dos Pesquisadores</div>
+            <div class="card-body">
+              <h3 class="card-title h5 text-info">Santo Isidoro de Sevilha</h3>
+              <p class="card-text">Criador das "Etimologias", enciclopédia precursora dos dados.</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+              <button class="btn btn-outline-info btn-sm" onclick="mudarSecao('isidoro')">Ver biografia</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-santo h-100">
+            <img src="images/Banner.santos.jpg" class="card-img-top" alt="São Gabriel Arcanjo">
+            <div class="card-header text-warning fw-bold">• O Mensageiro Divino</div>
+            <div class="card-body">
+              <h3 class="card-title h5 text-info">São Gabriel Arcanjo</h3>
+              <p class="card-text">Protetor das telecomunicações e meios digitais.</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+              <button class="btn btn-outline-info btn-sm" onclick="mudarSecao('sao-gabriel')">Ver biografia</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Offcanvas Santos com links originais repostos -->
+    <div class="offcanvas offcanvas-start offcanvas-santos" tabindex="-1" id="offCanvasSantos">
+      <div class="offcanvas-header border-bottom border-warning">
+        <h5 class="offcanvas-title text-warning fw-bold">Fé & Tecnologia</h5>
+        <button type="button" class="btn-close filter-invert" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column justify-content-between">
+        <div>
+          <div class="d-grid mb-3">
+            <button type="button" class="btn btn-warning text-dark fw-bold py-2 shadow-sm" data-bs-dismiss="offcanvas" onclick="mudarSecao('guerra-santa')">
+              ⚔️ IR PARA GUERRA SANTA
+            </button>
+          </div>
+          <hr class="border-warning">
+          <h6 class="text-warning fw-bold text-uppercase small mb-3">Biografias Internas</h6>
+          <div class="list-group list-group-flush mb-4">
+            <a class="list-group-item list-group-item-action bg-transparent text-light" data-bs-dismiss="offcanvas" onclick="mudarSecao('carlo-acutis')">✨ São Carlo Acutis</a>
+            <a class="list-group-item list-group-item-action bg-transparent text-light" data-bs-dismiss="offcanvas" onclick="mudarSecao('isidoro')">📚 Santo Isidoro de Sevilha</a>
+            <a class="list-group-item list-group-item-action bg-transparent text-light" data-bs-dismiss="offcanvas" onclick="mudarSecao('sao-gabriel')">🕊️ São Gabriel Arcanjo</a>
+          </div>
+
+          <h6 class="text-warning fw-bold text-uppercase small mb-3">Recursos Católicos</h6>
+          <div class="list-group list-group-flush">
+            <a href="https://www.vatican.va" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action bg-transparent text-light">
+              🇻🇦 Site Oficial do Vaticano
+            </a>
+            <a href="http://www.miracolieucaristici.org" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action bg-transparent text-light">
+              ✨ Exposição Milagres Eucarísticos (Carlo Acutis)
+            </a>
+            <a href="https://www.cnbb.org.br" target="_blank" rel="noopener noreferrer" class="list-group-item list-group-item-action bg-transparent text-light">
+              ✝️ CNBB - Igreja no Brasil
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =================================================================
+       BIOGRAFIA INDIVIDUAL 1: CARLO ACUTIS
+       ================================================================= -->
+  <div id="secao-carlo-acutis" class="view-secao">
+    <nav class="navbar navbar-expand-lg navbar-santos fixed-top text-uppercase">
+      <div class="container">
+        <button class="btn btn-outline-info me-3" onclick="mudarSecao('home-santos')">← Voltar</button>
+        <a class="navbar-brand text-info fw-bold">São Carlo Acutis</a>
+      </div>
+    </nav>
+    <div class="container py-5 mt-4">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5">
+          <img src="images/canonização.avif" alt="São Carlo Acutis" class="img-biografia-santo">
+        </div>
+        <div class="col-lg-7">
+          <span class="badge bg-warning text-dark mb-2">Padroeiro da Internet</span>
+          <h1 class="titulo-destaque mb-3">São Carlo Acutis</h1>
+          <p class="lead text-light">Jovem programador italiano que dedicou a sua vida a evangelizar através da web, catalogando todos os milagres eucarísticos do mundo.</p>
+          <hr class="border-info">
+          <p class="texto-suave">"A Eucaristia é a minha autoestrada para o Céu." Ficou mundialmente conhecido por unir a paixão pela informática e criação de sites com uma fé profunda, simples e alegre, mostrando que a santidade é possível em pleno século XXI.</p>
+          <blockquote class="blockquote border-start border-warning ps-3 my-4 text-warning fst-italic">
+            "Todos nascem como originais, mas muitos morrem como fotocópias."
+          </blockquote>
+          <button class="btn btn-outline-info mt-2" onclick="mudarSecao('home-santos')">← Voltar aos Patronos</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =================================================================
+       BIOGRAFIA INDIVIDUAL 2: SANTO ISIDORO DE SEVILHA
+       ================================================================= -->
+  <div id="secao-isidoro" class="view-secao">
+    <nav class="navbar navbar-expand-lg navbar-santos fixed-top text-uppercase">
+      <div class="container">
+        <button class="btn btn-outline-info me-3" onclick="mudarSecao('home-santos')">← Voltar</button>
+        <a class="navbar-brand text-info fw-bold">Santo Isidoro de Sevilha</a>
+      </div>
+    </nav>
+    <div class="container py-5 mt-4">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5">
+          <img src="images/isidoro.jpg" alt="Santo Isidoro de Sevilha" class="img-biografia-santo">
+        </div>
+        <div class="col-lg-7">
+          <span class="badge bg-warning text-dark mb-2">Padroeiro dos Pesquisadores e Programadores</span>
+          <h1 class="titulo-destaque mb-3">Santo Isidoro de Sevilha</h1>
+          <p class="lead text-light">Arcebispo e Doutor da Igreja do século VII, autor da monumental obra enciclopédica "Etimologias", considerada a precursora dos bancos de dados modernos.</p>
+          <hr class="border-info">
+          <p class="texto-suave">É invocado como patrono dos utilizadores de computadores, programadores e da internet devido ao seu esforço titânico em compilar, indexar e organizar todo o conhecimento humano da Antiguidade num sistema lógico de consulta.</p>
+          <button class="btn btn-outline-info mt-3" onclick="mudarSecao('home-santos')">← Voltar aos Patronos</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =================================================================
+       BIOGRAFIA INDIVIDUAL 3: SÃO GABRIEL ARCANJO
+       ================================================================= -->
+  <div id="secao-sao-gabriel" class="view-secao">
+    <nav class="navbar navbar-expand-lg navbar-santos fixed-top text-uppercase">
+      <div class="container">
+        <button class="btn btn-outline-info me-3" onclick="mudarSecao('home-santos')">← Voltar</button>
+        <a class="navbar-brand text-info fw-bold">São Gabriel Arcanjo</a>
+      </div>
+    </nav>
+    <div class="container py-5 mt-4">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5">
+          <img src="images/gabriel-sao.jfif" alt="São Gabriel Arcanjo" class="img-biografia-santo">
+        </div>
+        <div class="col-lg-7">
+          <span class="badge bg-warning text-dark mb-2">Padroeiro das Telecomunicações</span>
+          <h1 class="titulo-destaque mb-3">São Gabriel Arcanjo</h1>
+          <p class="lead text-light">O mensageiro celestial que levou a Boa Nova a Nossa Senhora. Protetor das comunicações, transmissores e redes digitais.</p>
+          <hr class="border-info">
+          <p class="texto-suave">Sendo o portador das grandes mensagens divinas na Sagrada Escritura, foi proclamado pela Igreja como o intercessor oficial de todos os profissionais de rádio, televisão, telecomunicações e redes de informação.</p>
+          <button class="btn btn-outline-info mt-3" onclick="mudarSecao('home-santos')">← Voltar aos Patronos</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =================================================================
+       ESTRUTURA: GUERRA SANTA (HOME)
+       ================================================================= -->
+  <div id="secao-guerra-santa" class="view-secao">
+    <nav class="navbar navbar-expand-lg navbar-gs fixed-top text-uppercase">
+      <div class="container">
+        <button class="btn btn-outline-warning me-3 py-1 px-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offCanvasGuerra">☰</button>
+        <a class="navbar-brand" onclick="mudarSecao('guerra-santa')" style="cursor:pointer;">
+          <img src="images/logo guerra santa.jpg" alt="Logo" class="logo-navbar logo-navbar-gs">
+        </a>
+        <div class="collapse navbar-collapse" id="menuGuerra">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link" onclick="mudarSecao('capitulo1')">A Convocação</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="mudarSecao('capitulo2')">As Cruzadas</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="mudarSecao('capitulo3')">O Cerco Final</a></li>
+          </ul>
+          <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-info btn-sm fw-bold text-dark" onclick="mudarSecao('home-santos')">✝️ Voltar para Santos</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+    <header class="header-foto-gs"></header>
+
+    <section class="banner py-5">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-7">
+            <p class="text-uppercase small fw-semibold mb-2 text-warning">Batalha Épica dos Séculos • Lutem Pela Fé e Honra</p>
+            <h1 class="display-4 fw-bold">GUERRA SANTA</h1>
+            <p class="lead mb-0 text-light">Descubra a história, as ordens de cavalaria e as grandes batalhas medievais.</p>
+          </div>
+          <div class="col-lg-5 text-center d-none d-lg-block">
+            <img src="images/logo guerra santa.jpg" alt="Logo" class="gs-logo">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container pb-4">
+      <h2 class="titulo-dourado mb-4">Crônicas da Guerra</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card card-gs h-100">
+            <div class="card-header text-warning fw-bold">Capítulo I</div>
+            <div class="card-body">
+              <h3 class="card-title h5 text-warning">A Convocação</h3>
+              <p class="card-text">O chamado ecoa pelas cidadelas e reinos.</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+              <button class="btn btn-outline-warning btn-sm" onclick="mudarSecao('capitulo1')">Ler crônica</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-gs h-100">
+            <div class="card-header text-warning fw-bold">Capítulo II</div>
+            <div class="card-body">
+              <h3 class="card-title h5 text-warning">A Cavalaria Sacra</h3>
+              <p class="card-text">O choque de aço no vale entre as fortalezas.</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+              <button class="btn btn-outline-warning btn-sm" onclick="mudarSecao('capitulo2')">Ler crônica</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-gs h-100">
+            <div class="card-header text-warning fw-bold">Capítulo III</div>
+            <div class="card-body">
+              <h3 class="card-title h5 text-warning">A Fortaleza</h3>
+              <p class="card-text">O cerco final às muralhas e a luta pela glória.</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+              <button class="btn btn-outline-warning btn-sm" onclick="mudarSecao('capitulo3')">Ler crônica</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Formulário de Alistamento -->
+    <section id="secao-alistamento" class="container py-5">
+      <div class="pergaminho-alistamento mx-auto">
+        <h2 class="titulo-dourado text-center mb-4" style="font-family:'Georgia',serif;">FORMULÁRIO DE ALISTAMENTO</h2>
+        <form id="formAlistamento">
+          <div class="mb-3">
+            <label class="form-label text-warning">Nome do Recruta</label>
+            <input type="text" id="nomeRecruta" class="input-pergaminho" placeholder="Digite seu nome de guerra..." required>
+          </div>
+          <div class="mb-4">
+            <label class="form-label text-warning">Ordem Desejada</label>
+            <select id="ordemDesejada" class="select-pergaminho" required>
+              <option value="Ordem do Leão Dourado">Ordem do Leão Dourado</option>
+              <option value="Ordem da Fênix de Fogo">Ordem da Fênix de Fogo</option>
+              <option value="Ordem dos Cavaleiros da Cruz">Ordem dos Cavaleiros da Cruz</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-alistar-fogo w-100">ALISTAR-SE</button>
+        </form>
+        <div id="mensagemJuramento" class="alert alert-warning mt-4 d-none text-center"></div>
+      </div>
+    </section>
+
+    <!-- Offcanvas Guerra Santa -->
+    <div class="offcanvas offcanvas-start offcanvas-gs" tabindex="-1" id="offCanvasGuerra">
+      <div class="offcanvas-header border-bottom border-warning">
+        <h5 class="offcanvas-title text-warning fw-bold">Arquivos da Ordem</h5>
+        <button type="button" class="btn-close filter-invert" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column justify-content-between">
+        <div>
+          <div class="d-grid mb-3">
+            <button type="button" class="btn btn-info text-dark fw-bold py-2 shadow-sm" data-bs-dismiss="offcanvas" onclick="mudarSecao('home-santos')">
+              ✝️ VOLTAR PARA SANTOS CATÓLICOS
+            </button>
+          </div>
+          <hr class="border-warning">
+          <h6 class="text-warning fw-bold text-uppercase small mb-3">Crônicas</h6>
+          <div class="list-group list-group-flush">
+            <a class="list-group-item list-group-item-action bg-transparent text-light" data-bs-dismiss="offcanvas" onclick="mudarSecao('capitulo1')">⚔️ Capítulo I: A Convocação</a>
+            <a class="list-group-item list-group-item-action bg-transparent text-light" data-bs-dismiss="offcanvas" onclick="mudarSecao('capitulo2')">🐎 Capítulo II: As Cruzadas</a>
+            <a class="list-group-item list-group-item-action bg-transparent text-light" data-bs-dismiss="offcanvas" onclick="mudarSecao('capitulo3')">🏰 Capítulo III: O Cerco Final</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =================================================================
+       CAPÍTULOS DA GUERRA SANTA
+       ================================================================= -->
+  <div id="secao-capitulo1" class="view-secao">
+    <nav class="navbar navbar-expand-lg navbar-gs fixed-top text-uppercase">
+      <div class="container">
+        <button class="btn btn-outline-warning me-3" onclick="mudarSecao('guerra-santa')">← Voltar</button>
+        <a class="navbar-brand text-warning fw-bold">Capítulo I: A Convocação</a>
+      </div>
+    </nav>
+    <div class="container py-5 mt-4">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5">
+          <img src="images/banner guerra santa.jpg" alt="A Convocação" class="img-biografia-santo border-warning">
+        </div>
+        <div class="col-lg-7">
+          <h1 class="titulo-dourado mb-3">Capítulo I: A Convocação</h1>
+          <p class="lead text-light">O chamado ecoa pelas cidadelas. Cavaleiros, arqueiros e escudeiros erguem os seus estandartes rumo ao campo de batalha.</p>
+          <hr class="border-warning">
+          <button class="btn btn-outline-warning mt-2" onclick="mudarSecao('guerra-santa')">← Voltar à Guerra Santa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="secao-capitulo2" class="view-secao">
+    <nav class="navbar navbar-expand-lg navbar-gs fixed-top text-uppercase">
+      <div class="container">
+        <button class="btn btn-outline-warning me-3" onclick="mudarSecao('guerra-santa')">← Voltar</button>
+        <a class="navbar-brand text-warning fw-bold">Capítulo II: As Cruzadas</a>
+      </div>
+    </nav>
+    <div class="container py-5 mt-4">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5">
+          <img src="images/cavalaria.jpg" alt="As Cruzadas" class="img-biografia-santo border-warning">
+        </div>
+        <div class="col-lg-7">
+          <h1 class="titulo-dourado mb-3">Capítulo II: As Cruzadas</h1>
+          <p class="lead text-light">No vale entre as fortalezas, aço contra aço decide o destino das rotas sagradas sob céus cobertos de fumaça e glória.</p>
+          <hr class="border-warning">
+          <button class="btn btn-outline-warning mt-2" onclick="mudarSecao('guerra-santa')">← Voltar à Guerra Santa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="secao-capitulo3" class="view-secao">
+    <nav class="navbar navbar-expand-lg navbar-gs fixed-top text-uppercase">
+      <div class="container">
+        <button class="btn btn-outline-warning me-3" onclick="mudarSecao('guerra-santa')">← Voltar</button>
+        <a class="navbar-brand text-warning fw-bold">Capítulo III: O Cerco Final</a>
+      </div>
+    </nav>
+    <div class="container py-5 mt-4">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5">
+          <img src="images/fortaleza.jpg" alt="O Cerco Final" class="img-biografia-santo border-warning">
+        </div>
+        <div class="col-lg-7">
+          <h1 class="titulo-dourado mb-3">Capítulo III: O Cerco Final</h1>
+          <p class="lead text-light">O cerco final às muralhas antigas: estratégias de guerra, honra inabalável e a luta pela glória eterna.</p>
+          <hr class="border-warning">
+          <button class="btn btn-outline-warning mt-2" onclick="mudarSecao('guerra-santa')">← Voltar à Guerra Santa</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script>
+    function mudarSecao(idSecao) {
+      const secoes = document.querySelectorAll('.view-secao');
+      secoes.forEach(s => s.classList.remove('ativo'));
+
+      const alvo = document.getElementById('secao-' + idSecao);
+      if (alvo) {
+        alvo.classList.add('ativo');
+      }
+
+      const body = document.body;
+      if (idSecao.includes('guerra-santa') || idSecao.includes('capitulo')) {
+        body.classList.remove('tema-santos');
+        body.classList.add('tema-guerra');
+      } else {
+        body.classList.remove('tema-guerra');
+        body.classList.add('tema-santos');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('formAlistamento').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nome = document.getElementById('nomeRecruta').value.trim();
+      const ordem = document.getElementById('ordemDesejada').value;
+      const msg = document.getElementById('mensagemJuramento');
+
+      if (nome) {
+        msg.innerHTML = `⚔️ <strong>Juramento Aceito!</strong><br>Saudações, <strong>${nome}</strong>. Pertences agora à <strong>${ordem}</strong>!`;
+        msg.classList.remove('d-none');
+        document.getElementById('nomeRecruta').value = '';
+      }
+    });
+  </script>
+</body>
+</html>
